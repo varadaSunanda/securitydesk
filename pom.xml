@@ -14,9 +14,6 @@
 	<name>securitydesk</name>
 	<description>Spring boot project for IBS security desk</description>
 
-	<properties>
-		<java.version>13</java.version>
-	</properties>
 
 	<dependencies>
 		<dependency>
