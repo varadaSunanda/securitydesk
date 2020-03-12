@@ -9,9 +9,10 @@ import {
 import Visitor from "./Visitor";
 import Baggage from "./Baggage";
 import Dresscode from "./Dresscode";
-import Vampire from "./Vampire";
+import Vampire from "./LateNightConveyance";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import LateNightConveyance from "./LateNightConveyance";
 
 library.add(faSearch)
 
@@ -81,7 +82,7 @@ class Main extends Component {
                                                         </NavLink>
                                                     </li>
                                                     <li>
-                                                        <NavLink exact to="/vampires">
+                                                        <NavLink exact to="/lateNightConveyance">
                                                             <p>Late night stay</p>
                                                         </NavLink>
                                                     </li>
@@ -93,7 +94,7 @@ class Main extends Component {
                                         <Route exact path="/" component={Visitor}/>
                                         <Route path="/dresscode" component={Dresscode}/>
                                         <Route path="/baggage" component={Baggage}/>
-                                        <Route path="/vampires" component={Vampire}/>
+                                        <Route path="/lateNightConveyance" component={LateNightConveyance}/>
                                     </div>
                                     <div className="clearfix"></div>
                                 </article>
