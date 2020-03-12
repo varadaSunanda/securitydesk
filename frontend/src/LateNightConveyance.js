@@ -27,9 +27,10 @@ class LateNightConveyance extends Component {
             name: name,
             employeeId: id
         };
-        axios.get('http://localhost:8080/')
+        axios.post('/createLNCEntry', bodyFormData)
             .then(res => {
-                console.log("index");
+                this.setState({LateNightConveyance: res.data});
+                console.log(this.state.LateNightConveyance);
             })
     }
 
