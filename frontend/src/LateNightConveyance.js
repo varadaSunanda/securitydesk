@@ -4,6 +4,7 @@ import Form from "./LNCForm";
 
 
 class LateNightConveyance extends Component {
+    intervalID;
     constructor(props) {
         super(props);
 
@@ -16,11 +17,19 @@ class LateNightConveyance extends Component {
     }
 
     componentDidMount() {
+        this.getData();
+    }
+
+
+    getData = () => {
         axios.get('/getLNCEntry')
             .then(res => {
-                this.setState({people: res.data})
-            })
+                this.setState({people: res.data});
+                // call getData() again in 5 seconds
+                this.intervalID = setTimeout(this.getData.bind(this), 1000);
+            });
     }
+
 
     addPerson(id, name) {
         const bodyFormData = {
@@ -34,14 +43,14 @@ class LateNightConveyance extends Component {
             })
     }
 
-    deletePerson(id) {
-        return () => {
-            this.setState(prevState => ({
-                people: prevState.people.filter(person => person.id !== id)
-            }));
-        };
-    }
-    render() {
+    deletePerson(e, employeeId){ e.preventDefault(); {
+        axios.get(`/updateLNCEntry/${employeeId}`)
+            .then(res => {
+                this.setState({people: res.data})
+            })
+    }}
+
+    render(){
         return (
             <section className="smart-filter-content">
 
@@ -69,10 +78,10 @@ class LateNightConveyance extends Component {
                         {this.state.people.map((person, index) => {
                             return (
                         <tr key={person.name}>
-                            <th scope="row">{person.employeeId}</th>
-                            <td data-title="purpose">{person.name}</td>
+                            <th scope="row" data-title="employeeId">{person.employeeId}</th>
+                            <td data-title="name">{person.name}</td>
                             <td data-title="id">{person.checkInTime}</td>
-                            <td data-title="checkout button"> <button type="submit" onClick={this.deletePerson(person.employeeId)}>Check out</button></td>
+                            <td data-title="checkout button"> <button type="submit" onClick={(e) => this.deletePerson(e, person.employeeId)}>Check out</button></td>
                         </tr>
                             );
                         })}

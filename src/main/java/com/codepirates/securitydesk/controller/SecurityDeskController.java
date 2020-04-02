@@ -39,6 +39,7 @@ public class SecurityDeskController {
     @RequestMapping(value = "/updateLNCEntry/{employeeId}", method = RequestMethod.GET)
     public List<LateNightConeyanceModel> getLNCEntry(@PathVariable String employeeId) {
         employeeDAL.updateLateNightEntry (employeeId);
-        return employeeDAL.getAllEmployee ();
+        //to return the list of rest of employees
+        return getLNCEntry ();
     }
 }
