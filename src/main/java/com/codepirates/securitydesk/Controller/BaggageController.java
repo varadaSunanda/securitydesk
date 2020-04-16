@@ -1,6 +1,7 @@
 package com.codepirates.securitydesk.controller;
 
 import com.codepirates.securitydesk.model.Baggage;
+import com.codepirates.securitydesk.model.Token;
 import com.codepirates.securitydesk.repository.BaggageRepository;
 import com.codepirates.securitydesk.util.CommonFuntions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,10 @@ public class BaggageController {
     @RequestMapping(value = "/baggage", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Baggage> getAllCheckinedBaggages() {
         return baggageRepository.getAllCheckinedBaggages();
+    }
+
+    @RequestMapping(value = "/token", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Token> getAllUsableTokens() {
+        return baggageRepository.getAllUsableTokens();
     }
 }

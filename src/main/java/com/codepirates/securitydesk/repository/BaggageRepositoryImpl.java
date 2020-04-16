@@ -1,6 +1,7 @@
 package com.codepirates.securitydesk.repository;
 
 import com.codepirates.securitydesk.model.Baggage;
+import com.codepirates.securitydesk.model.Token;
 import com.codepirates.securitydesk.util.CommonFuntions;
 import com.mongodb.client.result.UpdateResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,15 @@ public class BaggageRepositoryImpl implements BaggageRepository {
         Query query = new Query();
         query.addCriteria(Criteria.where("checkoutTime").is(null));
         return mongoTemplate.find(query, Baggage.class);
+    }
+
+    @Override
+    public List<Token> getAllUsableTokens() {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("checkoutTime").is(null));
+        List<String> tokenIds = mongoTemplate.findDistinct(query, "token", Baggage.class, String.class);
+        Query tokenQuery = new Query();
+        tokenQuery.addCriteria(Criteria.where("tokenId").nin(tokenIds));
+        return mongoTemplate.find(tokenQuery, Token.class);
     }
 }

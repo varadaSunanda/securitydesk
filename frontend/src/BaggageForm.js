@@ -1,9 +1,15 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 class Form extends Component {
     constructor() {
         super();
         this.formSubmit = this.formSubmit.bind(this);
+        this.getTokens = this.getTokens.bind(this);
+
+        this.state = {
+            tokens : []
+        }
     }
 
     formSubmit(event) {
@@ -16,6 +22,17 @@ class Form extends Component {
             this.props.checkinBaggage(name, id, token);
             form.reset();
         }
+    }
+
+    componentDidMount() {
+        this.getTokens();
+    }
+
+    getTokens() {
+        axios.get('/token')
+            .then(res => {
+                this.setState({tokens: res.data})
+            })
     }
 
     render() {
@@ -49,9 +66,15 @@ class Form extends Component {
                                     <div className="row">
                                         <div className="col-md-4">
                                             <p className="input-label blue-tag">Token</p>
-                                        </div>
-                                        <div className="col-md-8">
-                                            <input id="token" type="text"/>
+                                            <div>
+                                                <select id="token">
+                                                    {this.state.tokens.map((token, index) => {
+                                                    return (
+                                                        <option value={token.tokenId}>{token.tokenId}</option>
+                                                    );
+                                                    })}
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

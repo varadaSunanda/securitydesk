@@ -1,0 +1,12 @@
+db.token.insertMany([
+{"tokenId" : "1"},
+{"tokenId" : "2"},
+{"tokenId" : "3"},
+{"tokenId" : "4"},
+{"tokenId" : "5"},
+{"tokenId" : "6"},
+{"tokenId" : "7"},
+{"tokenId" : "8"},
+{"tokenId" : "9"},
+{"tokenId" : "10"}
+])
