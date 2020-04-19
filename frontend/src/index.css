@@ -1,12 +1,12 @@
-html, body, #root, .main {
+html, body {
     height: 100%;
+    background-color: #000000;
 }
 body {
     margin: 0;
 }
 .main {
     width: 100%;
-    background-color: #000000;
 }
 
 .table-class {
@@ -169,6 +169,7 @@ header .user-profile ul.nav li a.profile-dropdown:hover {
     width: 100%;
     margin-bottom: 1.5em;
     border-spacing: 0;
+    table-layout: fixed;
 }
 .responsive-table tbody th {
     color: white;
