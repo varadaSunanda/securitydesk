@@ -1,9 +1,6 @@
-package com.codepirates.securitydesk.model;
+package com.codepirates.securitydesk.Model;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.time.LocalDate;
 
 @Document
 public class LateNightConeyanceModel extends Employee {

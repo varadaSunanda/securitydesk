@@ -1,4 +1,4 @@
-package com.codepirates.securitydesk.model;
+package com.codepirates.securitydesk.Model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 

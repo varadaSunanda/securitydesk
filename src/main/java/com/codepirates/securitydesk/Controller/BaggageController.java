@@ -1,9 +1,9 @@
-package com.codepirates.securitydesk.controller;
+package com.codepirates.securitydesk.Controller;
 
-import com.codepirates.securitydesk.model.Baggage;
-import com.codepirates.securitydesk.model.Token;
-import com.codepirates.securitydesk.repository.BaggageRepository;
-import com.codepirates.securitydesk.util.CommonFuntions;
+import com.codepirates.securitydesk.Model.Baggage;
+import com.codepirates.securitydesk.Model.Token;
+import com.codepirates.securitydesk.Repository.BaggageRepository;
+import com.codepirates.securitydesk.Util.CommonFuntions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;

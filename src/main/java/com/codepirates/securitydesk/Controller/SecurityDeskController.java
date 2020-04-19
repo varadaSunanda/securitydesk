@@ -1,10 +1,10 @@
-package com.codepirates.securitydesk.controller;
+package com.codepirates.securitydesk.Controller;
 
 
-import com.codepirates.securitydesk.model.LateNightConeyanceModel;
-import com.codepirates.securitydesk.repository.EmployeeDAL;
-import com.codepirates.securitydesk.repository.EmployeeRepository;
-import com.codepirates.securitydesk.util.CommonFuntions;
+import com.codepirates.securitydesk.Model.LateNightConeyanceModel;
+import com.codepirates.securitydesk.Repository.EmployeeDAL;
+import com.codepirates.securitydesk.Repository.EmployeeRepository;
+import com.codepirates.securitydesk.Util.CommonFuntions;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

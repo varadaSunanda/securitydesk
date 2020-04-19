@@ -1,7 +1,7 @@
-package com.codepirates.securitydesk.repository;
+package com.codepirates.securitydesk.Repository;
 
-import com.codepirates.securitydesk.model.Baggage;
-import com.codepirates.securitydesk.model.Token;
+import com.codepirates.securitydesk.Model.Baggage;
+import com.codepirates.securitydesk.Model.Token;
 import com.mongodb.client.result.UpdateResult;
 
 import java.util.List;

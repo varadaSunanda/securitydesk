@@ -1,8 +1,8 @@
-package com.codepirates.securitydesk.repository;
+package com.codepirates.securitydesk.Repository;
 
-import com.codepirates.securitydesk.model.Baggage;
-import com.codepirates.securitydesk.model.Token;
-import com.codepirates.securitydesk.util.CommonFuntions;
+import com.codepirates.securitydesk.Model.Baggage;
+import com.codepirates.securitydesk.Model.Token;
+import com.codepirates.securitydesk.Util.CommonFuntions;
 import com.mongodb.client.result.UpdateResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;

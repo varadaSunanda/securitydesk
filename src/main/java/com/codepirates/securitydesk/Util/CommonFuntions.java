@@ -1,4 +1,4 @@
-package com.codepirates.securitydesk.util;
+package com.codepirates.securitydesk.Util;
 
 import org.springframework.stereotype.Component;
 
