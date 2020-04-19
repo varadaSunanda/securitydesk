@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Form from "./Form";
+import axios from 'axios';
 
 class Visitor extends Component {
     constructor(props) {
@@ -13,18 +14,31 @@ class Visitor extends Component {
         this.deletePerson = this.deletePerson.bind(this);
     }
 
-    addPerson(name, id, purpose) {
-        this.setState(prevState => ({
-            people: [...prevState.people, {name, id, purpose}]
-        }));
+    componentDidMount() {
+        axios.get('/getAllVisitor')
+            .then(res => {
+                this.setState({people: res.data});
+            });
     }
 
-    deletePerson(id) {
-        return () => {
-            this.setState(prevState => ({
-                people: prevState.people.filter(person => person.id !== id)
-            }));
+    addPerson(name, id, purpose) {
+        const people = {
+            name: name,
+            tagId: id,
+            purpose: purpose
         };
+        axios.post('/addVisitor', people)
+            .then(res => {
+                this.setState({people: res.data});
+            });
+    }
+
+    deletePerson(e, tagId) {
+        e.preventDefault();
+        axios.get(`/updateVisitor/${tagId}`)
+            .then(res => {
+                this.setState({people: res.data});
+            });
     }
     render() {
         return (
@@ -52,13 +66,13 @@ class Visitor extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {this.state.people.map((person, index) => {
+                        {this.state.people.map((person) => {
                             return (
                         <tr key={person.name}>
                             <th scope="row">{person.name}</th>
                             <td data-title="purpose">{person.purpose}</td>
-                            <td data-title="id">{person.id}</td>
-                            <td data-title="checkout button"> <button type="submit" onClick={this.deletePerson(person.id)}>Check out</button></td>
+                            <td data-title="id">{person.tagId}</td>
+                            <td data-title="checkout button"> <button type="submit" onClick={(e) => this.deletePerson(e, person.tagId)}>Check out</button></td>
                         </tr>
                             );
                         })}
