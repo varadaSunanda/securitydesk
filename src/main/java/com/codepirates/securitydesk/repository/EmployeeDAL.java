@@ -1,7 +1,7 @@
-package com.codepirates.securitydesk.Repository;
+package com.codepirates.securitydesk.repository;
 
-import com.codepirates.securitydesk.Model.Employee;
-import com.codepirates.securitydesk.Model.LateNightConeyanceModel;
+import com.codepirates.securitydesk.model.Employee;
+import com.codepirates.securitydesk.model.LateNightConeyanceModel;
 import com.mongodb.client.result.UpdateResult;
 
 import java.util.List;

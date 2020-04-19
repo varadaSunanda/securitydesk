@@ -1,10 +1,10 @@
-package com.codepirates.securitydesk.Controller;
+package com.codepirates.securitydesk.controller;
 
 
-import com.codepirates.securitydesk.Model.LateNightConeyanceModel;
-import com.codepirates.securitydesk.Repository.EmployeeDAL;
-import com.codepirates.securitydesk.Repository.EmployeeRepository;
-import com.codepirates.securitydesk.Util.CommonFuntions;
+import com.codepirates.securitydesk.model.LateNightConeyanceModel;
+import com.codepirates.securitydesk.repository.EmployeeDAL;
+import com.codepirates.securitydesk.repository.EmployeeRepository;
+import com.codepirates.securitydesk.util.CommonFunctions;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,17 +17,17 @@ public class SecurityDeskController {
 
     private final EmployeeRepository employeeRepository;
     private final EmployeeDAL employeeDAL;
-    private final CommonFuntions commonFuntions;
+    private final CommonFunctions commonFunctions;
 
-    public SecurityDeskController(EmployeeRepository employeeRepository, EmployeeDAL employeeDAL, CommonFuntions commonFuntions) {
+    public SecurityDeskController(EmployeeRepository employeeRepository, EmployeeDAL employeeDAL, CommonFunctions commonFunctions) {
         this.employeeRepository = employeeRepository;
         this.employeeDAL = employeeDAL;
-        this.commonFuntions = commonFuntions;
+        this.commonFunctions = commonFunctions;
     }
 
     @RequestMapping(value = "/createLNCEntry", method = RequestMethod.POST)
     public LateNightConeyanceModel addNewLNCEntry(@RequestBody LateNightConeyanceModel lateNightConeyanceModel) {
-        lateNightConeyanceModel.setCheckInTime(commonFuntions.currentDateAndTime ());
+        lateNightConeyanceModel.setCheckInTime(commonFunctions.currentDateAndTime ());
         return employeeDAL.addNewLateNightEntry(lateNightConeyanceModel);
     }
 

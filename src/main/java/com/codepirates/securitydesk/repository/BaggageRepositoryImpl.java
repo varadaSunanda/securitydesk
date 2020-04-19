@@ -1,8 +1,8 @@
-package com.codepirates.securitydesk.Repository;
+package com.codepirates.securitydesk.repository;
 
-import com.codepirates.securitydesk.Model.Baggage;
-import com.codepirates.securitydesk.Model.Token;
-import com.codepirates.securitydesk.Util.CommonFuntions;
+import com.codepirates.securitydesk.model.Baggage;
+import com.codepirates.securitydesk.model.Token;
+import com.codepirates.securitydesk.util.CommonFunctions;
 import com.mongodb.client.result.UpdateResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -20,7 +20,7 @@ public class BaggageRepositoryImpl implements BaggageRepository {
     private MongoTemplate mongoTemplate;
 
     @Autowired
-    private CommonFuntions commonFuntions;
+    private CommonFunctions commonFunctions;
 
     @Override
     public Baggage addNewBaggage(Baggage baggage) {
@@ -32,7 +32,7 @@ public class BaggageRepositoryImpl implements BaggageRepository {
         Query query = new Query ();
         query.addCriteria (Criteria.where ("employeeId").is (employeeId));
         query.addCriteria(Criteria.where("checkoutTime").is(null));
-        return mongoTemplate.updateFirst(query, Update.update("checkoutTime", commonFuntions.currentDateAndTime()), Baggage.class);
+        return mongoTemplate.updateFirst(query, Update.update("checkoutTime", commonFunctions.currentDateAndTime()), Baggage.class);
     }
 
     @Override

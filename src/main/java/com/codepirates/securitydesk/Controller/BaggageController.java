@@ -1,9 +1,9 @@
-package com.codepirates.securitydesk.Controller;
+package com.codepirates.securitydesk.controller;
 
-import com.codepirates.securitydesk.Model.Baggage;
-import com.codepirates.securitydesk.Model.Token;
-import com.codepirates.securitydesk.Repository.BaggageRepository;
-import com.codepirates.securitydesk.Util.CommonFuntions;
+import com.codepirates.securitydesk.model.Baggage;
+import com.codepirates.securitydesk.model.Token;
+import com.codepirates.securitydesk.repository.BaggageRepository;
+import com.codepirates.securitydesk.util.CommonFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,11 +21,11 @@ public class BaggageController {
     private BaggageRepository baggageRepository;
 
     @Autowired
-    private CommonFuntions commonFuntions;
+    private CommonFunctions commonFunctions;
 
     @RequestMapping(value = "/baggage", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Baggage> checkinBaggage(@RequestBody Baggage baggage) {
-        baggage.setCheckinTime(commonFuntions.currentDateAndTime());
+        baggage.setCheckinTime(commonFunctions.currentDateAndTime());
         baggageRepository.addNewBaggage(baggage);
         return baggageRepository.getAllCheckinedBaggages();
     }

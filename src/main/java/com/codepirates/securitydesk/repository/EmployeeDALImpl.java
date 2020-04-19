@@ -1,8 +1,8 @@
-package com.codepirates.securitydesk.Repository;
+package com.codepirates.securitydesk.repository;
 
-import com.codepirates.securitydesk.Model.Employee;
-import com.codepirates.securitydesk.Model.LateNightConeyanceModel;
-import com.codepirates.securitydesk.Util.CommonFuntions;
+import com.codepirates.securitydesk.model.Employee;
+import com.codepirates.securitydesk.model.LateNightConeyanceModel;
+import com.codepirates.securitydesk.util.CommonFunctions;
 import com.mongodb.client.result.UpdateResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -19,7 +19,7 @@ public class EmployeeDALImpl implements EmployeeDAL {
     @Autowired
     private MongoTemplate mongoTemplate;
     @Autowired
-    private CommonFuntions commonFuntions;
+    private CommonFunctions commonFunctions;
 
 
     @Override
@@ -38,7 +38,7 @@ public class EmployeeDALImpl implements EmployeeDAL {
     public UpdateResult updateLateNightEntry(String employeeId){
         Query query = new Query ();
         query.addCriteria (Criteria.where ("employeeId").is (employeeId));
-        return mongoTemplate.updateFirst (query, Update.update ("checkOutTime", commonFuntions.currentDateAndTime ()),LateNightConeyanceModel.class) ;
+        return mongoTemplate.updateFirst (query, Update.update ("checkOutTime", commonFunctions.currentDateAndTime ()),LateNightConeyanceModel.class) ;
     }
 
     @Override
