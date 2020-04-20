@@ -24,10 +24,6 @@ class Form extends Component {
         }
     }
 
-    componentDidMount() {
-        this.getTokens();
-    }
-
     getTokens() {
         axios.get('/token')
             .then(res => {
@@ -36,6 +32,12 @@ class Form extends Component {
     }
 
     render() {
+
+        if(this.props.fetchTokens) {
+            this.props.fetchTokens = false;
+            this.getTokens();
+        }
+
         return (
             <form onSubmit={this.formSubmit}>
                 <div className="item active">

@@ -45,6 +45,9 @@ class Baggage extends Component {
 
 
     render() {
+
+        let fetchTokens = true;
+
         return (
             <section className="smart-filter-content">
 
@@ -54,7 +57,7 @@ class Baggage extends Component {
 
                     <h2 className="smart-filter-heading">Enter details:</h2>
 
-                    <Form checkinBaggage={this.checkinBaggage} />
+                    <Form checkinBaggage={this.checkinBaggage} fetchTokens={fetchTokens}/>
                 </div>
 
                 <div>
