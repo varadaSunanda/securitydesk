@@ -1,9 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Main from "./Main";
+import Login from "./Login"
 import "./index.css";
+import "./login.scss"
+
+
+
+
 
 ReactDOM.render(
-<Main/>,
+<Login/>,
     document.getElementById("root")
 );
