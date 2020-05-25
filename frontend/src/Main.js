@@ -9,7 +9,6 @@ import {
 import Visitor from "./Visitor";
 import Baggage from "./Baggage";
 import Dresscode from "./Dresscode";
-import Vampire from "./LateNightConveyance";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import LateNightConveyance from "./LateNightConveyance";
