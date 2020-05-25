@@ -1,13 +1,13 @@
 package com.codepirates.securitydesk.model;
 
-import org.springframework.stereotype.Component;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Component()
-public class UserModel {
+@Document
+public class User {
 
     private String employeeID;
     private String password;
-    private String newpassword;
+    private String newPassword;
     private String job;
     private static String employeeName;
 
@@ -16,15 +16,15 @@ public class UserModel {
     }
 
     public static void setEmployeeName(String employeeName) {
-        UserModel.employeeName = employeeName;
+        User.employeeName = employeeName;
     }
 
-    public String getNewpassword() {
-        return newpassword;
+    public String getNewPassword() {
+        return newPassword;
     }
 
-    public void setNewpassword(String newpassword) {
-        this.newpassword = newpassword;
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 
     public String getJob() {

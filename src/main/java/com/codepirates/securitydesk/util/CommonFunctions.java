@@ -10,8 +10,8 @@ import java.util.Date;
 public class CommonFunctions {
 
     public String currentDateAndTime() {
-        DateFormat df = new SimpleDateFormat ("dd/MM/yy HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         Date dateobj = new Date();
-        return df.format (dateobj);
+        return df.format(dateobj);
     }
 }

@@ -1,11 +1,10 @@
-package com.codepirates.securitydesk.service;
+package com.codepirates.securitydesk.facade;
 
 import com.codepirates.securitydesk.entity.MasterEmployee;
-import com.codepirates.securitydesk.repository.AdminRepositoryImpl;
-import com.codepirates.securitydesk.repository.SuperRepository;
-import com.codepirates.securitydesk.model.UserModel;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.codepirates.securitydesk.model.User;
+import com.codepirates.securitydesk.repository.AdminRepository;
+import com.codepirates.securitydesk.service.SuperService;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -20,25 +19,27 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Properties;
 
-@Service
-public class SendMailServiceImpl implements SendMailService {
+@Component
+public class SendMailFacade {
 
     String m_from = "from@test.com";
     String m_to = "G1-G6@test.com";
 
-    @Autowired
-    SuperRepository superRepository;
-
-    @Autowired
-    AdminRepositoryImpl adminRepositoryImpl;
+    private final SuperService superService;
+    private final AdminRepository adminRepository;
 
     private static SecretKeySpec secretKey;
     private static byte[] key;
     final String secret = "ssshhhhhhhhhhh!!!!";
 
-    public boolean forgetPass(UserModel forgetpass) {
+    public SendMailFacade(SuperService superService, AdminRepository adminRepository) {
+        this.superService = superService;
+        this.adminRepository = adminRepository;
+    }
 
-        for (MasterEmployee test : superRepository.fetchMasterEmployee()) {
+    public boolean forgetPass(User forgetpass) {
+
+        for (MasterEmployee test : superService.fetchMasterEmployee()) {
             if (test.getEmpId().equals(forgetpass.getEmployeeID())) {
 
                 String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvxyz";
@@ -58,9 +59,9 @@ public class SendMailServiceImpl implements SendMailService {
                 String Empid = test.getEmpId();
                 String Pass = "New Password: " + newPassword;
 
-                MasterEmployee employee = adminRepositoryImpl.findByEmpId(test.getEmpId());
+                MasterEmployee employee = adminRepository.findByEmpId(test.getEmpId());
                 employee.setPassword(encrypt(newPassword, secret));
-                adminRepositoryImpl.save(employee);
+                adminRepository.save(employee);
 
                 return sendMail(m_from, m_to, Empid, Pass);
             }

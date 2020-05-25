@@ -1,8 +1,5 @@
 package com.codepirates.securitydesk.model;
 
-import org.springframework.data.annotation.Id;
-
-
 public class Visitor {
 
     String tagId;

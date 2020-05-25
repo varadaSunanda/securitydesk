@@ -1,11 +1,16 @@
 package com.codepirates.securitydesk.repository;
 
-        import com.codepirates.securitydesk.entity.MasterEmployee;
-        import org.springframework.data.mongodb.repository.MongoRepository;
+import com.codepirates.securitydesk.entity.MasterEmployee;
 
-public interface AdminRepository extends MongoRepository<MasterEmployee, String> {
+import java.util.List;
+
+public interface AdminRepository {
 
     MasterEmployee findByEmpId(String empId);
 
     MasterEmployee findByIdOne(int sno);
+
+    MasterEmployee save(MasterEmployee employee);
+
+    List<MasterEmployee> findAll();
 }

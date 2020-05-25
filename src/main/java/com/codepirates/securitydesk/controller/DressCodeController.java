@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class DresscodeController {
+public class DressCodeController {
 
     @Autowired
     private DresscodeRepository dresscodeRepository;
@@ -33,7 +33,7 @@ public class DresscodeController {
         return dresscodeRepository.getAllActiveDresscodeViolations();
     }
 
-    @RequestMapping(value = "/deleteDresscode", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/deleteDresscode", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Dresscode> deleteDresscodeViolations(@RequestBody Dresscode dresscode) {
         dresscodeRepository.deleteDresscodeViolation(dresscode);
         return dresscodeRepository.getAllActiveDresscodeViolations();

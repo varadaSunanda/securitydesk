@@ -2,39 +2,34 @@ package com.codepirates.securitydesk.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
-
-import javax.persistence.*;
 
 public class MasterJobRole {
 
     @Expose
-    @SerializedName("id")
+    @SerializedName("Id")
     @Id
-    @GenericGenerator(name = "Id", strategy = "increment")
-    @GeneratedValue(generator = "Id", strategy = GenerationType.AUTO)
-    private int id;
+    private int Id;
 
     @Expose
-    @SerializedName("jobRoleName")
-    @Field("jobRoleName")
-    private String jobRoleName;
+    @SerializedName("JobRoleName")
+    @Field("JobRoleName")
+    private String JobRoleName;
 
     public int getId() {
-        return id;
+        return Id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        Id = id;
     }
 
     public String getJobRoleName() {
-        return jobRoleName;
+        return JobRoleName;
     }
 
     public void setJobRoleName(String jobRoleName) {
-        this.jobRoleName = jobRoleName;
+        JobRoleName = jobRoleName;
     }
 }

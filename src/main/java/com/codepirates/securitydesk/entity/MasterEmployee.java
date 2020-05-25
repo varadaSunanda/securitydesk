@@ -2,12 +2,9 @@ package com.codepirates.securitydesk.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import java.util.Set;
 
 public class MasterEmployee {
@@ -15,8 +12,6 @@ public class MasterEmployee {
     @Expose
     @SerializedName("Id")
     @Id
-    @GenericGenerator(name = "Id", strategy = "increment")
-    @GeneratedValue(generator = "Id", strategy = GenerationType.AUTO)
     private int Id;
 
     @Expose
@@ -45,9 +40,9 @@ public class MasterEmployee {
     private Set<MasterJobRole> Roles;
 
     @Expose
-    @SerializedName("empname")
-    @Field("empname")
-    private String empname;
+    @SerializedName("EmpName")
+    @Field("EmpName")
+    private String EmpName;
 
     @Expose
     @SerializedName("DeleteStatus")
@@ -102,12 +97,12 @@ public class MasterEmployee {
         this.Roles = roles;
     }
 
-    public String getEmpname() {
-        return empname;
+    public String getEmpName() {
+        return EmpName;
     }
 
-    public void setEmpname(String empname) {
-        this.empname = empname;
+    public void setEmpName(String empName) {
+        EmpName = empName;
     }
 
     public int getDeleteStatus() {

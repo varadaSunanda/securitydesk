@@ -1,6 +1,5 @@
 package com.codepirates.securitydesk.controller;
 
-
 import com.codepirates.securitydesk.model.LateNightConeyanceModel;
 import com.codepirates.securitydesk.repository.EmployeeDAL;
 import com.codepirates.securitydesk.repository.EmployeeRepository;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 @RestController
@@ -27,19 +27,19 @@ public class SecurityDeskController {
 
     @RequestMapping(value = "/createLNCEntry", method = RequestMethod.POST)
     public LateNightConeyanceModel addNewLNCEntry(@RequestBody LateNightConeyanceModel lateNightConeyanceModel) {
-        lateNightConeyanceModel.setCheckInTime(commonFunctions.currentDateAndTime ());
+        lateNightConeyanceModel.setCheckInTime(commonFunctions.currentDateAndTime());
         return employeeDAL.addNewLateNightEntry(lateNightConeyanceModel);
     }
 
     @RequestMapping(value = "/getLNCEntry", method = RequestMethod.GET)
     public List<LateNightConeyanceModel> getLNCEntry() {
-        return employeeRepository.findAllByCheckOutTimeIsNotNull ();
+        return employeeRepository.findAllByCheckOutTimeIsNotNull();
     }
 
     @RequestMapping(value = "/updateLNCEntry/{employeeId}", method = RequestMethod.GET)
     public List<LateNightConeyanceModel> getLNCEntry(@PathVariable String employeeId) {
-        employeeDAL.updateLateNightEntry (employeeId);
+        employeeDAL.updateLateNightEntry(employeeId);
         //to return the list of rest of employees
-        return getLNCEntry ();
+        return getLNCEntry();
     }
 }

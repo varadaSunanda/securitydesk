@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.mongodb.core.query.Query;
+
 import java.util.List;
 
 @Repository
@@ -21,7 +22,7 @@ public class DresscodeRepositoryImpl implements DresscodeRepository {
     private CommonFunctions commonFunctions;
 
     @Override
-    public Dresscode addDresscodeViolation(Dresscode  dresscode) {
+    public Dresscode addDresscodeViolation(Dresscode dresscode) {
         return mongoTemplate.save(dresscode);
     }
 
@@ -36,11 +37,12 @@ public class DresscodeRepositoryImpl implements DresscodeRepository {
         query.addCriteria(Criteria.where("status").is("Active"));
         return mongoTemplate.find(query, Dresscode.class);
     }
+
     @Override
     public UpdateResult deleteDresscodeViolation(Dresscode dresscode) {
-        Query query = new Query ();
-        query.addCriteria (Criteria.where ("employeeId").is (dresscode.getEmployeeId()));
-        query.addCriteria (Criteria.where ("checkinTime").is (dresscode.getCheckinTime()));
-        return mongoTemplate.updateFirst (query, Update.update ("status","Inactive"),Dresscode.class) ;
+        Query query = new Query();
+        query.addCriteria(Criteria.where("employeeId").is(dresscode.getEmployeeId()));
+        query.addCriteria(Criteria.where("checkinTime").is(dresscode.getCheckinTime()));
+        return mongoTemplate.updateFirst(query, Update.update("status", "Inactive"), Dresscode.class);
     }
 }

@@ -29,8 +29,8 @@ public class BaggageRepositoryImpl implements BaggageRepository {
 
     @Override
     public UpdateResult updateBaggage(String employeeId) {
-        Query query = new Query ();
-        query.addCriteria (Criteria.where ("employeeId").is (employeeId));
+        Query query = new Query();
+        query.addCriteria(Criteria.where("employeeId").is(employeeId));
         query.addCriteria(Criteria.where("checkoutTime").is(null));
         return mongoTemplate.updateFirst(query, Update.update("checkoutTime", commonFunctions.currentDateAndTime()), Baggage.class);
     }

@@ -1,14 +1,12 @@
-package com.codepirates.securitydesk.service;
+package com.codepirates.securitydesk.facade;
 
-import com.codepirates.securitydesk.entity.ExcelEmployeeList;
 import com.codepirates.securitydesk.entity.MasterEmployee;
 import com.codepirates.securitydesk.entity.MasterJobRole;
-import com.codepirates.securitydesk.repository.AdminRepositoryImpl;
-import com.codepirates.securitydesk.repository.JobRoleImpl;
-import com.codepirates.securitydesk.repository.SuperRepository;
-import com.codepirates.securitydesk.model.AdminModel;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.codepirates.securitydesk.model.Admin;
+import com.codepirates.securitydesk.repository.AdminRepository;
+import com.codepirates.securitydesk.repository.JobRole;
+import com.codepirates.securitydesk.service.SuperService;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -17,26 +15,27 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
-@Service
-public class AdminServiceImpl implements AdminService {
+@Component
+public class AdminFacade {
 
-    @Autowired
-    SuperRepository adminrepo;
-
-    @Autowired
-    JobRoleImpl jobRoleImpl;
-
-    @Autowired
-    AdminRepositoryImpl adminRepositoryImpl;
+    private final SuperService superService;
+    private final JobRole jobRole;
+    private final AdminRepository adminRepository;
 
     private static SecretKeySpec secretKey;
     private static byte[] key;
     final String secret = "ssshhhhhhhhhhh!!!!";
 
-    public boolean saveUser(AdminModel user) {
+    public AdminFacade(SuperService superService, JobRole jobRole, AdminRepository adminRepository) {
+        this.superService = superService;
+        this.jobRole = jobRole;
+        this.adminRepository = adminRepository;
+    }
+
+    public boolean saveUser(Admin user) {
 
         if (validateUser(user)) {
-            MasterEmployee employee = adminRepositoryImpl.findByEmpId(user.getId());
+            MasterEmployee employee = adminRepository.findByEmpId(user.getId());
 
             for (MasterJobRole test : employee.getRoles()) {
                 if (test.getJobRoleName().equals(user.getJobs())) {
@@ -45,11 +44,11 @@ public class AdminServiceImpl implements AdminService {
             }
 
             employee.setPassword(encrypt(user.getPassword(), secret));
-            MasterJobRole job = jobRoleImpl.findByJobName(user.getJobs());
+            MasterJobRole job = jobRole.findByJobName(user.getJobs());
             Set<MasterJobRole> roles = employee.getRoles();
             roles.add(job);
             employee.setRoles(roles);
-            adminRepositoryImpl.save(employee);
+            adminRepository.save(employee);
             return false;
 
         } else {
@@ -59,18 +58,18 @@ public class AdminServiceImpl implements AdminService {
             masterEmployee.setLocation(user.getLocation());
             String encryptedPassword = encrypt(user.getPassword(), secret);
             masterEmployee.setPassword(encryptedPassword);
-            masterEmployee.setEmpname(user.getName());
+            masterEmployee.setEmpName(user.getName());
             Set<MasterJobRole> finalRoles = new HashSet<MasterJobRole>();
-            finalRoles.add(jobRoleImpl.findByJobName(user.getJobs()));
+            finalRoles.add(jobRole.findByJobName(user.getJobs()));
             masterEmployee.setRoles(finalRoles);
-            adminRepositoryImpl.save(masterEmployee);
+            adminRepository.save(masterEmployee);
         }
         return false;
     }
 
-    public boolean validateUser(AdminModel user) {
+    public boolean validateUser(Admin user) {
 
-        List<MasterEmployee> allUsers = adminrepo.fetchMasterEmployee();
+        List<MasterEmployee> allUsers = superService.fetchMasterEmployee();
 
         for (MasterEmployee test : allUsers) {
             if ((test.getEmpId().equals(user.getId())) && (test.getDeleteStatus() != 1)) {
@@ -107,21 +106,21 @@ public class AdminServiceImpl implements AdminService {
         return null;
     }
 
-    public boolean deleteUser(List<AdminModel> requestData) {
+    public boolean deleteUser(List<Admin> requestData) {
 
-        return adminrepo.deleteUserDB(requestData);
+        return superService.deleteUserDB(requestData);
     }
 
     public List<MasterEmployee> searchUser() {
 
-        return adminrepo.searchUserDB();
+        return superService.searchUserDB();
     }
 
     @SuppressWarnings("unused")
-    public List<AdminModel> searchManagerService(AdminModel requestData) {
-        List<MasterEmployee> allEmployee = adminrepo.fetchMasterEmployee();
+    public List<Admin> searchManagerService(Admin requestData) {
+        List<MasterEmployee> allEmployee = superService.fetchMasterEmployee();
         List<MasterEmployee> finalEmployees = new ArrayList<MasterEmployee>();
-        List<AdminModel> responseData = new ArrayList<AdminModel>();
+        List<Admin> responseData = new ArrayList<Admin>();
         for (MasterEmployee test : allEmployee) {
             if ((test.getLocation()).equals(requestData.getLocation())) {
 
@@ -131,11 +130,11 @@ public class AdminServiceImpl implements AdminService {
                 for (MasterJobRole test2 : roles) {
                     if (test2.getJobRoleName().equals(requestData.getJobs())) {
 
-                        AdminModel oneData = new AdminModel();
+                        Admin oneData = new Admin();
                         oneData.setEmail(test.getEmail());
                         oneData.setId(test.getEmpId());
                         oneData.setSno(test.getId());
-                        oneData.setName(test.getEmpname());
+                        oneData.setName(test.getEmpName());
                         oneData.setJob(requestData.getJobs());
                         oneData.setLocation(requestData.getLocation());
                         responseData.add(oneData);
@@ -146,26 +145,20 @@ public class AdminServiceImpl implements AdminService {
         return responseData;
     }
 
-    public List<ExcelEmployeeList> searchAllUserExcel() {
-
-        return adminrepo.listAllUsersExcel();
-    }
-
-    public List<AdminModel> listManagersService() {
-        List<MasterEmployee> employees = adminrepo.fetchMasterEmployee();
-        List<AdminModel> responseData = new ArrayList<AdminModel>();
+    public List<Admin> listManagersService() {
+        List<MasterEmployee> employees = superService.fetchMasterEmployee();
+        List<Admin> responseData = new ArrayList<Admin>();
 
         for (MasterEmployee test : employees) {
             if (test.getDeleteStatus() != 1) {
                 for (MasterJobRole test2 : test.getRoles()) {
-                    AdminModel oneData = new AdminModel();
+                    Admin oneData = new Admin();
                     oneData.setSno(test.getId());
                     oneData.setId(test.getEmpId());
                     oneData.setEmail(test.getEmail());
                     oneData.setLocation(test.getLocation());
                     oneData.setJob(test2.getJobRoleName());
-                    oneData.setName(test.getEmpname());
-                    ;
+                    oneData.setName(test.getEmpName());
                     responseData.add(oneData);
                 }
             }

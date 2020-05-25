@@ -8,8 +8,10 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public abstract class AdminRepositoryImpl implements AdminRepository {
+public class AdminRepositoryImpl implements AdminRepository {
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -26,6 +28,16 @@ public abstract class AdminRepositoryImpl implements AdminRepository {
         final Query query = constructQueryForFindByIdOne(sno);
 
         return mongoTemplate.findOne(query, MasterEmployee.class);
+    }
+
+    @Override
+    public MasterEmployee save(MasterEmployee employee) {
+        return mongoTemplate.save(employee);
+    }
+
+    @Override
+    public List<MasterEmployee> findAll() {
+        return mongoTemplate.findAll(MasterEmployee.class);
     }
 
     private Query constructQueryForFindOne(String empId) {

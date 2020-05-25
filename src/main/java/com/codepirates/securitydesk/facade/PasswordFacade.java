@@ -1,11 +1,10 @@
-package com.codepirates.securitydesk.service;
+package com.codepirates.securitydesk.facade;
 
 import com.codepirates.securitydesk.entity.MasterEmployee;
-import com.codepirates.securitydesk.repository.AdminRepositoryImpl;
-import com.codepirates.securitydesk.repository.SuperRepository;
-import com.codepirates.securitydesk.model.UserModel;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.codepirates.securitydesk.model.User;
+import com.codepirates.securitydesk.repository.AdminRepository;
+import com.codepirates.securitydesk.service.SuperService;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -16,20 +15,22 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
-@Service
-public class PasswordServiceImpl implements PasswordService {
+@Component
+public class PasswordFacade {
 
-    @Autowired
-    AdminRepositoryImpl adminRepositoryImpl;
-
-    @Autowired
-    SuperRepository adminrepo;
+    private final AdminRepository adminRepository;
+    private final SuperService superService;
 
     private static SecretKeySpec secretKey;
     private static byte[] key;
     final String secret = "ssshhhhhhhhhhh!!!!";
 
-    public boolean validatePass(UserModel userpass) {
+    public PasswordFacade(AdminRepository adminRepository, SuperService superService) {
+        this.adminRepository = adminRepository;
+        this.superService = superService;
+    }
+
+    public boolean validatePass(User userpass) {
 
         String encryptedString = encrypt(userpass.getPassword(), secret);
         userpass.setPassword(encryptedString);
@@ -37,8 +38,8 @@ public class PasswordServiceImpl implements PasswordService {
         return Passvalidator(userpass);
     }
 
-    public boolean Passvalidator(UserModel userLogin) {
-        List<MasterEmployee> allUsers = adminrepo.fetchMasterEmployee();
+    public boolean Passvalidator(User userLogin) {
+        List<MasterEmployee> allUsers = superService.fetchMasterEmployee();
         int flag = 0;
         for (MasterEmployee test : allUsers) {
             if (test.getEmpId().equals(userLogin.getEmployeeID())) {
@@ -49,15 +50,15 @@ public class PasswordServiceImpl implements PasswordService {
         if (flag != 1) {
             return false;
         }
-        MasterEmployee employee = adminRepositoryImpl.findByEmpId(userLogin.getEmployeeID());
+        MasterEmployee employee = adminRepository.findByEmpId(userLogin.getEmployeeID());
 
         if (employee.getPassword().equals(userLogin.getPassword())) {
 
-            String encryptedString = encrypt(userLogin.getNewpassword(), secret);
+            String encryptedString = encrypt(userLogin.getNewPassword(), secret);
             userLogin.setPassword(encryptedString);
 
             employee.setPassword(encryptedString);
-            adminRepositoryImpl.save(employee);
+            adminRepository.save(employee);
             return true;
         }
         return false;

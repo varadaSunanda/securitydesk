@@ -5,19 +5,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Dresscode extends Employee {
 
-
     private String checkinTime;
     private String violation;
     private String status;
 
-
-    public String getCheckinTime()
-    {
+    public String getCheckinTime() {
         return checkinTime;
     }
 
-    public void setCheckinTime(String checkinTime)
-    {
+    public void setCheckinTime(String checkinTime) {
         this.checkinTime = checkinTime;
     }
 

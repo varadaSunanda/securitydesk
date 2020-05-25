@@ -1,9 +1,9 @@
 package com.codepirates.securitydesk.model;
 
-import org.springframework.stereotype.Component;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Component
-public class AdminModel {
+@Document
+public class Admin {
 
     private String name;
     private String email;

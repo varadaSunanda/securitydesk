@@ -1,13 +1,12 @@
-package com.codepirates.securitydesk.service;
+package com.codepirates.securitydesk.facade;
 
 import com.codepirates.securitydesk.entity.MasterEmployee;
 import com.codepirates.securitydesk.entity.MasterJobRole;
-import com.codepirates.securitydesk.repository.AdminRepositoryImpl;
-import com.codepirates.securitydesk.repository.JobRoleImpl;
-import com.codepirates.securitydesk.repository.SuperRepository;
-import com.codepirates.securitydesk.model.UserModel;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.codepirates.securitydesk.model.User;
+import com.codepirates.securitydesk.repository.AdminRepository;
+import com.codepirates.securitydesk.repository.JobRole;
+import com.codepirates.securitydesk.service.SuperService;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -16,23 +15,24 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
-@Service
-public class LoginServiceImpl implements LoginService {
+@Component
+public class LoginFacade {
 
-    @Autowired
-    SuperRepository adminrepo;
-
-    @Autowired
-    JobRoleImpl jobRoleImpl;
-
-    @Autowired
-    AdminRepositoryImpl adminRepositoryImpl;
+    private final SuperService superService;
+    private final JobRole jobRole;
+    private final AdminRepository adminRepository;
 
     private static SecretKeySpec secretKey;
     private static byte[] key;
     final String secret = "ssshhhhhhhhhhh!!!!";
 
-    public boolean validateLogin(UserModel userlogin) {
+    public LoginFacade(SuperService superService, JobRole jobRole, AdminRepository adminRepository) {
+        this.superService = superService;
+        this.jobRole = jobRole;
+        this.adminRepository = adminRepository;
+    }
+
+    public boolean validateLogin(User userlogin) {
         MasterEmployee userLoginEntity = new MasterEmployee();
         userLoginEntity.setEmpId(userlogin.getEmployeeID());
 
@@ -44,8 +44,8 @@ public class LoginServiceImpl implements LoginService {
         return false;
     }
 
-    public boolean validateUser(UserModel userLogin) {
-        List<MasterEmployee> allUsers = adminrepo.fetchMasterEmployee();
+    public boolean validateUser(User userLogin) {
+        List<MasterEmployee> allUsers = superService.fetchMasterEmployee();
         int flag = 0;
         for (MasterEmployee test : allUsers) {
             if (test.getEmpId().equals(userLogin.getEmployeeID())) {
@@ -57,7 +57,7 @@ public class LoginServiceImpl implements LoginService {
             return false;
         }
 
-        MasterEmployee employee = adminRepositoryImpl.findByEmpId(userLogin.getEmployeeID());
+        MasterEmployee employee = adminRepository.findByEmpId(userLogin.getEmployeeID());
 
         if (employee.getEmpId().equals(userLogin.getEmployeeID())) {
             if (employee.getPassword().equals(userLogin.getPassword())) {
@@ -101,12 +101,12 @@ public class LoginServiceImpl implements LoginService {
         return null;
     }
 
-    public List<String> loginRequest(UserModel userlogin) {
+    public List<String> loginRequest(User userlogin) {
 
         String encryptedString = encrypt(userlogin.getPassword(), secret);
         userlogin.setPassword(encryptedString);
 
-        List<MasterEmployee> allUsers = adminrepo.fetchMasterEmployee();
+        List<MasterEmployee> allUsers = superService.fetchMasterEmployee();
         int flag = 0;
         for (MasterEmployee test : allUsers) {
             if (test.getEmpId().equals(userlogin.getEmployeeID())) {
@@ -118,7 +118,7 @@ public class LoginServiceImpl implements LoginService {
             return null;
         }
 
-        MasterEmployee employee = adminRepositoryImpl.findByEmpId(userlogin.getEmployeeID());
+        MasterEmployee employee = adminRepository.findByEmpId(userlogin.getEmployeeID());
 
         if (employee.getPassword().equals(userlogin.getPassword())) {
             List<String> jobRoles = new ArrayList<String>();
@@ -126,14 +126,14 @@ public class LoginServiceImpl implements LoginService {
             for (MasterJobRole test : employee.getRoles()) {
                 jobRoles.add(test.getJobRoleName());
             }
-            UserModel.setEmployeeName(employee.getEmpname());
+            User.setEmployeeName(employee.getEmpName());
             return jobRoles;
         }
         return null;
     }
 
-    public String fetchusername() {
+    public String fetchUsername() {
 
-        return UserModel.getEmployeeName();
+        return User.getEmployeeName();
     }
 }
