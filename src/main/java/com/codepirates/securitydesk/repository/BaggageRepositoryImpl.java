@@ -56,4 +56,11 @@ public class BaggageRepositoryImpl implements BaggageRepository {
         tokenQuery.addCriteria(Criteria.where("tokenId").nin(tokenIds));
         return mongoTemplate.find(tokenQuery, Token.class);
     }
+
+    @Override
+    public boolean checkIfBaggageAlreadyExistsForEmployee(String employeeId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("employeeId").is(employeeId)).addCriteria(Criteria.where("checkoutTime").is(null));
+        return mongoTemplate.count(query, Baggage.class) > 0 ? true : false;
+    }
 }

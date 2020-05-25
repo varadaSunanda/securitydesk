@@ -28,6 +28,7 @@ public class VisitorDALImpl implements VisitorDAL {
     public UpdateResult updateVisitor(String tagId){
         Query query = new Query();
         query.addCriteria (Criteria.where ("tagId").is (tagId));
-        return mongoTemplate.updateFirst(query, Update.update("checkOutTime", commonFunctions.currentDateAndTime()), Visitor.class);
+        query.addCriteria(Criteria.where("checkoutTime").is(null));
+        return mongoTemplate.updateMulti(query, Update.update("checkOutTime", commonFunctions.currentDateAndTime()), Visitor.class);
     }
 }

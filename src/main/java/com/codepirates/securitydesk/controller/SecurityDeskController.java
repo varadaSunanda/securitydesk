@@ -26,9 +26,10 @@ public class SecurityDeskController {
     }
 
     @RequestMapping(value = "/createLNCEntry", method = RequestMethod.POST)
-    public LateNightConeyanceModel addNewLNCEntry(@RequestBody LateNightConeyanceModel lateNightConeyanceModel) {
+    public List<LateNightConeyanceModel> addNewLNCEntry(@RequestBody LateNightConeyanceModel lateNightConeyanceModel) {
         lateNightConeyanceModel.setCheckInTime(commonFunctions.currentDateAndTime());
-        return employeeDAL.addNewLateNightEntry(lateNightConeyanceModel);
+        employeeDAL.addNewLateNightEntry(lateNightConeyanceModel);
+        return getLNCEntry();
     }
 
     @RequestMapping(value = "/getLNCEntry", method = RequestMethod.GET)

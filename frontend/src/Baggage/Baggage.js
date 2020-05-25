@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import axios from "axios";
-import Form from "./BaggageForm";
+import BaggageForm from "./baggage-form";
+import { NotificationManager } from 'react-notifications';
 
 class Baggage extends Component {
-
     constructor(props){
         super(props);
 
         this.state = {
             baggage : []
-        }
+        };
 
         this.checkinBaggage = this.checkinBaggage.bind(this);
         this.checkoutBaggage = this.checkoutBaggage.bind(this);
@@ -32,45 +32,44 @@ class Baggage extends Component {
         axios.post('/baggage', bodyFormData)
             .then(res => {
                 this.setState({baggage: res.data});
-            })
+                NotificationManager.success('Successfully added baggage', 'Successful!', 2000);
+            }).catch(err => {
+            NotificationManager.error(err.message, 'Error!');
+        })
     }
 
     checkoutBaggage(id) {
-
         axios.put('/baggage/'+id)
             .then(res => {
                 this.setState({baggage: res.data});
-            })
+                NotificationManager.success('Successfully checkout baggage', 'Successful!', 2000);
+            }).catch(err => {
+            NotificationManager.error(err.message, 'Error!');
+        })
     }
 
 
     render() {
-
         let fetchTokens = true;
 
         return (
             <section className="smart-filter-content">
-
                 <h2 className="smart-filter-heading">Check-in Baggage</h2>
-
                 <div>
-
                     <h2 className="smart-filter-heading">Enter details:</h2>
-
-                    <Form checkinBaggage={this.checkinBaggage} fetchTokens={fetchTokens}/>
+                    <BaggageForm checkinBaggage={this.checkinBaggage} fetchTokens={fetchTokens}/>
                 </div>
-
                 <div>
                     <h2 className="smart-filter-heading">Baggage Check-ins</h2>
                     <table className="responsive-table">
                         <thead>
-                        <tr>
-                            <th scope="col">Employee-Id</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Token</th>
-                            <th scope="col">CheckIn Time</th>
-                            <th scope="col">CheckOut</th>
-                        </tr>
+                            <tr>
+                                <th scope="col">Employee-Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Token</th>
+                                <th scope="col">CheckIn Time</th>
+                                <th scope="col">CheckOut</th>
+                            </tr>
                         </thead>
                         <tbody>
                         {this.state.baggage.map((bag, index) => {
@@ -87,7 +86,6 @@ class Baggage extends Component {
                         </tbody>
                     </table>
                 </div>
-
             </section>
         );
     }
