@@ -17,4 +17,6 @@ public interface BaggageRepository {
     List<Baggage> getAllCheckinedBaggages();
 
     List<Token> getAllUsableTokens();
+
+    boolean checkIfBaggageAlreadyExistsForEmployee(String employeeId);
 }

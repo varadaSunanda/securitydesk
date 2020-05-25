@@ -35,7 +35,7 @@ public class VisitorController {
     @RequestMapping(method = RequestMethod.GET, value = "/updateVisitor/{tagId}")
     public List<Visitor> updateVisitor(@PathVariable String tagId) {
         visitorDAL.updateVisitor(tagId);
-        return getAllVisitor();
+        return visitorRepository.findAllByCheckOutTimeIsNotNull();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/getAllVisitor")

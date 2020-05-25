@@ -1,9 +1,15 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
+import axios from "axios";
 
-class Form extends Component {
+class BaggageForm extends Component {
     constructor() {
         super();
         this.formSubmit = this.formSubmit.bind(this);
+        this.getTokens = this.getTokens.bind(this);
+
+        this.state = {
+            tokens : []
+        }
     }
 
     formSubmit(event) {
@@ -11,14 +17,26 @@ class Form extends Component {
         const form = event.target;
         const id = form.elements["id"].value;
         const name = form.elements["name"].value;
-        const violation=form.elements["violation"].value;
-        if (id && name && violation) {
-            this.props.addPerson(id, name,violation);
+        const token = form.elements["token"].value;
+        if (id && name && token) {
+            this.props.checkinBaggage(name, id, token);
             form.reset();
         }
     }
 
+    getTokens() {
+        axios.get('/token')
+            .then(res => {
+                this.setState({tokens: res.data})
+            })
+    }
+
     render() {
+        if(this.props.fetchTokens) {
+            this.props.fetchTokens = false;
+            this.getTokens();
+        }
+
         return (
             <form onSubmit={this.formSubmit}>
                 <div className="item active">
@@ -45,17 +63,23 @@ class Form extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-4">
+                                <div className="col-md-2">
                                     <div className="row">
                                         <div className="col-md-4">
-                                            <p className="input-label purple-tag">Violation</p>
-                                        </div>
-                                        <div className="col-md-8">
-                                            <input id="violation" type="text"/>
+                                            <p className="input-label blue-tag">Token</p>
+                                            <div>
+                                                <select id="token">
+                                                    {this.state.tokens.map((token, index) => {
+                                                        return (
+                                                            <option value={token.tokenId}>{token.tokenId}</option>
+                                                        );
+                                                    })}
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-1">
+                                <div className="col-md-2">
                                     <button type="submit">ADD</button>
                                 </div>
                             </div>
@@ -67,4 +91,4 @@ class Form extends Component {
     }
 }
 
-export default Form;
+export default BaggageForm;

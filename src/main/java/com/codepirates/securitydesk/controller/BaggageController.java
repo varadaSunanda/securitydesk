@@ -24,7 +24,9 @@ public class BaggageController {
     private CommonFunctions commonFunctions;
 
     @RequestMapping(value = "/baggage", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Baggage> checkinBaggage(@RequestBody Baggage baggage) {
+    public List<Baggage> checkinBaggage(@RequestBody Baggage baggage) throws Exception {
+        if (baggageRepository.checkIfBaggageAlreadyExistsForEmployee(baggage.getEmployeeId()))
+            throw new Exception("Baggage already exists for employee");
         baggage.setCheckinTime(commonFunctions.currentDateAndTime());
         baggageRepository.addNewBaggage(baggage);
         return baggageRepository.getAllCheckinedBaggages();

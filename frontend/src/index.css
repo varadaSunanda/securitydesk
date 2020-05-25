@@ -207,8 +207,8 @@ header .user-profile ul.nav li a.profile-dropdown:hover {
     }
 }
 .responsive-table thead th {
-    background-color: #00a4a9;
-    border: 1px solid #00a4a9;
+    background-color: #1a4868;
+    border: 1px solid #1a4868;
     font-weight: normal;
     text-align: center;
     color: white;
@@ -288,8 +288,8 @@ header .user-profile ul.nav li a.profile-dropdown:hover {
 }
 @media (min-width: 30em) {
     .responsive-table tbody th[scope="row"] {
-        border-left: 1px solid #00a4a9;
-        border-bottom: 1px solid #00a4a9;
+        border-left: 1px solid #1a4868;
+        border-bottom: 1px solid #1a4868;
     }
 }
 @media (min-width: 48em) {
@@ -304,14 +304,14 @@ header .user-profile ul.nav li a.profile-dropdown:hover {
 }
 @media (min-width: 48em) {
     .responsive-table tbody td {
-        border-left: 1px solid #00a4a9;
-        border-bottom: 1px solid #00a4a9;
+        border-left: 1px solid #1a4868;
+        border-bottom: 1px solid #1a4868;
         text-align: center;
     }
 }
 @media (min-width: 48em) {
     .responsive-table tbody td:last-of-type {
-        border-right: 1px solid #00a4a9;
+        border-right: 1px solid #1a4868;
     }
 }
 .responsive-table tbody td[data-type=currency] {

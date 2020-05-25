@@ -38,7 +38,8 @@ public class EmployeeDALImpl implements EmployeeDAL {
     public UpdateResult updateLateNightEntry(String employeeId) {
         Query query = new Query();
         query.addCriteria(Criteria.where("employeeId").is(employeeId));
-        return mongoTemplate.updateFirst(query, Update.update("checkOutTime", commonFunctions.currentDateAndTime()), LateNightConeyanceModel.class);
+        query.addCriteria(Criteria.where("checkoutTime").is(null));
+        return mongoTemplate.updateMulti(query, Update.update("checkOutTime", commonFunctions.currentDateAndTime()), LateNightConeyanceModel.class);
     }
 
     @Override

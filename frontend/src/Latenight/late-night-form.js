@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class Form extends Component {
+class LateNightForm extends Component {
     constructor() {
         super();
         this.formSubmit = this.formSubmit.bind(this);
@@ -11,9 +11,8 @@ class Form extends Component {
         const form = event.target;
         const id = form.elements["id"].value;
         const name = form.elements["name"].value;
-        const purpose = form.elements["purpose"].value;
-        if (name && id && purpose) {
-            this.props.addPerson(name, id, purpose);
+        if (id && name) {
+            this.props.addPerson(id, name);
             form.reset();
         }
     }
@@ -28,7 +27,17 @@ class Form extends Component {
                                 <div className="col-md-4">
                                     <div className="row">
                                         <div className="col-md-4">
-                                            <p className="input-label green-tag">Visitor Name</p>
+                                            <p className="input-label green-tag">Employee ID</p>
+                                        </div>
+                                        <div className="col-md-8">
+                                            <input id="id" type="text"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-4">
+                                    <div className="row">
+                                        <div className="col-md-4">
+                                            <p className="input-label purple-tag">Employee Name</p>
                                         </div>
                                         <div className="col-md-8">
                                             <input id="name" type="text"/>
@@ -36,26 +45,6 @@ class Form extends Component {
                                     </div>
                                 </div>
                                 <div className="col-md-4">
-                                    <div className="row">
-                                        <div className="col-md-4">
-                                            <p className="input-label purple-tag">Purpose</p>
-                                        </div>
-                                        <div className="col-md-8">
-                                            <input id="purpose" type="text"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-3">
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                            <p className="input-label red-tag">Tag ID</p>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <input id="id" type="text"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-1">
                                     <button type="submit">ADD</button>
                                 </div>
                             </div>
@@ -67,4 +56,4 @@ class Form extends Component {
     }
 }
 
-export default Form;
+export default LateNightForm;

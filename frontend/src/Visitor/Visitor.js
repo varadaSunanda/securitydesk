@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
-import Form from "./Form";
+import React, { Component } from 'react'
+import VisitorForm from "./visitor-form";
 import axios from 'axios';
+import { NotificationManager } from 'react-notifications';
 
 class Visitor extends Component {
     constructor(props) {
@@ -30,6 +31,7 @@ class Visitor extends Component {
         axios.post('/addVisitor', people)
             .then(res => {
                 this.setState({people: res.data});
+                NotificationManager.success('Successfully added visitor', 'Successful!', 2000);
             });
     }
 
@@ -38,48 +40,43 @@ class Visitor extends Component {
         axios.get(`/updateVisitor/${tagId}`)
             .then(res => {
                 this.setState({people: res.data});
+                NotificationManager.success('Successfully deleted visitor', 'Successful!', 2000);
             });
     }
     render() {
         return (
             <section className="smart-filter-content">
-
                 <h2 className="smart-filter-heading">Employee Register</h2>
                 <p className="smart-filter-text">Choose from below sections to register.</p>
-
-                        <div>
-
-                            <h2 className="smart-filter-heading">Enter visitor details:</h2>
-
-                            <Form addPerson={this.addPerson} />
-                        </div>
-
+                    <div>
+                        <h2 className="smart-filter-heading">Enter visitor details:</h2>
+                        <VisitorForm addPerson={this.addPerson} />
+                    </div>
                 <div>
                     <h2 className="smart-filter-heading">Checked in visitors:</h2>
                     <table className="responsive-table">
                         <thead>
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Purpose</th>
-                            <th scope="col">Tag ID</th>
-                            <th scope="col">Action</th>
-                        </tr>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Purpose</th>
+                                <th scope="col">Tag ID</th>
+                                <th scope="col">Action</th>
+                            </tr>
                         </thead>
                         <tbody>
                         {this.state.people.map((person) => {
                             return (
-                        <tr key={person.name}>
-                            <th scope="row">{person.name}</th>
-                            <td data-title="purpose">{person.purpose}</td>
-                            <td data-title="id">{person.tagId}</td>
-                            <td data-title="checkout button"> <button type="submit" onClick={(e) => this.deletePerson(e, person.tagId)}>Check out</button></td>
-                        </tr>
+                                <tr key={person.name}>
+                                    <th scope="row">{person.name}</th>
+                                    <td data-title="purpose">{person.purpose}</td>
+                                    <td data-title="id">{person.tagId}</td>
+                                    <td data-title="checkout button"> <button type="submit" onClick={(e) => this.deletePerson(e, person.tagId)}>Check out</button></td>
+                                </tr>
                             );
                         })}
                         </tbody>
                     </table>
                 </div>
-
             </section>
         );
     }

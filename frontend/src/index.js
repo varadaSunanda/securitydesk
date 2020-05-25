@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Login from "./Login"
+import Login from "./Login/Login"
 import "./index.css";
-import "./login.scss"
+import "./Login/login.scss"
 
 
 

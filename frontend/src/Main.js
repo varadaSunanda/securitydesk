@@ -6,29 +6,21 @@ import {
     HashRouter
 } from "react-router-dom";
 
-import Visitor from "./Visitor";
-import Baggage from "./Baggage";
-import Dresscode from "./Dresscode";
+import Visitor from "./Visitor/Visitor";
+import Baggage from "./Baggage/Baggage";
+import Dresscode from "./Dresscode/Dresscode";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import LateNightConveyance from "./LateNightConveyance";
+import LateNightConveyance from "./Latenight/LateNightConveyance";
+
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer } from 'react-notifications';
 
 library.add(faSearch)
 
 class Main extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            displayCategory: "all",
-            products: props.products,
-            productCategories: props.productCategories
-        };
-        this.setCategory = this.setCategory.bind(this);
-    }
-    setCategory(category) {
-        this.setState({
-            displayCategory: category
-        });
     }
     render() {
         return (
@@ -42,9 +34,8 @@ class Main extends Component {
                                     <ul class="nav navbar-nav navbar-right">
                                         <li className="dropdown">
                                             <a href="#" data-toggle="dropdown" className="profile-dropdown dropdown-toggle">
-                                                Shekhar R <b class="caret"></b></a>
+                                                {this.props.user} <b class="caret"></b></a>
                                             <ul className="dropdown-menu">
-                                                <li><a href="#">Account Settings</a></li>
                                                 <li><a href="#">Log out</a></li>
                                             </ul>
                                         </li>
@@ -66,7 +57,7 @@ class Main extends Component {
                                             <div className="collapse navbar-collapse">
                                                 <ul className="nav nav-tabs">
                                                     <li>
-                                                        <NavLink exact to="/">
+                                                        <NavLink exact to="/visitor">
                                                             <p>Visitor</p>
                                                         </NavLink>
                                                     </li>
@@ -90,7 +81,7 @@ class Main extends Component {
                                         </nav>
                                     </div>
                                     <div className="smart-filter-section col-md-10">
-                                        <Route exact path="/" component={Visitor}/>
+                                        <Route exact path="/visitor" component={Visitor}/>
                                         <Route path="/dresscode" component={Dresscode}/>
                                         <Route path="/baggage" component={Baggage}/>
                                         <Route path="/lateNightConveyance" component={LateNightConveyance}/>
@@ -100,7 +91,7 @@ class Main extends Component {
                             </section>
                         </div>
                     </section>
-
+                    <NotificationContainer />
                 </div>
             </HashRouter>
         );
