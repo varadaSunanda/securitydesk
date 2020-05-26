@@ -7,7 +7,7 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isVisible: true,
+            isVisible: false,
             userName: ''
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -17,25 +17,25 @@ class Login extends React.Component {
         e.preventDefault();
         const form = e.target;
         const user = {
-            username: form.elements['username'].value,
+            employeeID: form.elements['username'].value,
             password: form.elements['password'].value
         };
-        this.setState({
-            isVisible: false,
-            userName: 'Shekhar'
-        });
-        /*axios.get(`/validateLogin/${user}`)
+        // this.setState({
+        //     isVisible: false,
+        //     userName: 'Shekhar'
+        // });
+        axios.post(`/user/validateLogin`, user)
             .then(res => {
                 this.setState({
-                    isVisible: true,
-                    userName: 'Shekhar'
+                    isVisible: res.data.employeeName,
+                    userName: res.data.employeeName
                 });
-            });*/
+            });
         return false;
     }
 
     render() {
-        let component = this.state.isVisible ? <Modal onSubmit={ this.handleSubmit } key='modal'/> : <Main user={this.state.userName} />;
+        let component = this.state.isVisible ? <Main user={this.state.userName} /> : <Modal onSubmit={ this.handleSubmit } key='modal'/> ;
         return <CSSTransitionGroup transitionName="animation" transitionAppear={true} transitionAppearTimeout={500} transitionEnterTimeout={500} transitionLeaveTimeout={300}>
             { component }
         </CSSTransitionGroup>

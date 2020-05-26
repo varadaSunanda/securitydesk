@@ -55,19 +55,20 @@ class BaggageForm extends Component {
                                 </div>
                                 <div className="col-md-4">
                                     <div className="row">
-                                        <div className="col-md-4">
+                                        <div className="col-md-6">
                                             <p className="input-label purple-tag">Employee Name</p>
                                         </div>
-                                        <div className="col-md-8">
+                                        <div className="col-md-6">
                                             <input id="name" type="text"/>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-2">
+                                <div className="col-md-4">
                                     <div className="row">
-                                        <div className="col-md-4">
+                                        <div className="col-md-6">
                                             <p className="input-label blue-tag">Token</p>
-                                            <div>
+                                        </div>
+                                        <div className="col-md-6">
                                                 <select id="token">
                                                     {this.state.tokens.map((token, index) => {
                                                         return (
@@ -75,12 +76,13 @@ class BaggageForm extends Component {
                                                         );
                                                     })}
                                                 </select>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-md-2">
+                                    <div className="row">
                                     <button type="submit">ADD</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

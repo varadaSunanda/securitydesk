@@ -38,20 +38,14 @@ public class LoginController {
         return loginService.loginRequest(user);
     }
 
-    @RequestMapping(value = "/fetchUsername", method = RequestMethod.POST)
-    @ResponseBody
-    public String fetchUsername() {
-
-        return loginService.fetchUsername();
-    }
 
     @RequestMapping(value = "/validateLogin", method = RequestMethod.POST)
     @ResponseBody
-    public boolean validateLogin(@RequestBody User user) {
+    public User validateLogin(@RequestBody User user) {
 
         boolean status = false;
         status = loginService.validateLogin(user);
-        return status;
+        return user;
     }
 
     @RequestMapping(value = "/forgetPassword", method = RequestMethod.POST)
