@@ -61,16 +61,10 @@ public class LoginFacade {
 
         if (employee.getEmpId().equals(userLogin.getEmployeeID())) {
             if (employee.getPassword().equals(userLogin.getPassword())) {
-                if (employee.getRoles().size() != 0) {
-                    Set<MasterJobRole> employeeRoles = employee.getRoles();
-                    for (MasterJobRole test1 : employeeRoles) {
-                        if (test1.getJobRoleName().equals(userLogin.getJob())) {
+                userLogin.setEmployeeName (employee.getEmpName ());
                             return true;
                         }
-                    }
                 }
-            }
-        }
         return false;
     }
 
@@ -126,14 +120,9 @@ public class LoginFacade {
             for (MasterJobRole test : employee.getRoles()) {
                 jobRoles.add(test.getJobRoleName());
             }
-            User.setEmployeeName(employee.getEmpName());
+            userlogin.setEmployeeName(employee.getEmpName());
             return jobRoles;
         }
         return null;
-    }
-
-    public String fetchUsername() {
-
-        return User.getEmployeeName();
     }
 }

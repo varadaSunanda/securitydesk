@@ -61,6 +61,10 @@ header .user-profile ul.nav li a.profile-dropdown:hover {
     margin-bottom: 50px;
 }
 
+.content form button {
+    margin-top: 0;
+}
+
 .smart-filter-nav, .smart-filter-section {
     float: left;
 }
