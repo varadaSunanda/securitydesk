@@ -6,11 +6,27 @@ import axios from "axios";
 class Login extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            isVisible: false,
-            userName: ''
-        };
+        let userData = JSON.parse(window.sessionStorage.getItem('userData'));
+        if (userData) {
+            this.state = {
+                isVisible: userData,
+                userName: userData.employeeName
+            };
+        } else {
+            this.state = {
+                isVisible: false,
+                userName: ''
+            };
+        }
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.setLogout = this.setLogout.bind(this);
+    }
+
+    setLogout() {
+        this.setState({
+            isVisible: false
+        });
+        window.sessionStorage.setItem('userData', null);
     }
 
     handleSubmit(e) {
@@ -20,22 +36,19 @@ class Login extends React.Component {
             employeeID: form.elements['username'].value,
             password: form.elements['password'].value
         };
-        // this.setState({
-        //     isVisible: false,
-        //     userName: 'Shekhar'
-        // });
         axios.post(`/user/validateLogin`, user)
             .then(res => {
                 this.setState({
                     isVisible: res.data.employeeName,
-                    userName: res.data.employeeName
+                    userName: res.data.employeeName,
                 });
+                window.sessionStorage.setItem('userData', JSON.stringify(res.data));
             });
         return false;
     }
 
     render() {
-        let component = this.state.isVisible ? <Main user={this.state.userName} /> : <Modal onSubmit={ this.handleSubmit } key='modal'/> ;
+        let component = this.state.isVisible ? <Main user={this.state.userName} setLogout={this.setLogout} /> : <Modal onSubmit={ this.handleSubmit } key='modal'/> ;
         return <CSSTransitionGroup transitionName="animation" transitionAppear={true} transitionAppearTimeout={500} transitionEnterTimeout={500} transitionLeaveTimeout={300}>
             { component }
         </CSSTransitionGroup>
