@@ -14,4 +14,6 @@ public interface DresscodeRepository {
     List<Dresscode> getAllActiveDresscodeViolations();
 
     UpdateResult deleteDresscodeViolation(Dresscode dresscode);
+
+    boolean checkIfEmployeeAlreadyExists(String employeeId);
 }

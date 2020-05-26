@@ -36,7 +36,9 @@ class Dresscode extends Component {
             .then(res => {
                 this.setState({totalViolation: res.data});
                 NotificationManager.success('Successfully added violation', 'Successful!', 2000);
-            })
+            }).catch(err => {
+            NotificationManager.error('Employee data already added', 'Error!');
+        })
     }
 
     deleteEntry(employeeId,checkinTime) {
@@ -48,7 +50,9 @@ class Dresscode extends Component {
                    .then(res => {
                        this.setState({totalViolation: res.data});
                        NotificationManager.success('Successfully deleted violation', 'Successful!', 2000);
-                   })
+                   }).catch(err => {
+                   NotificationManager.error(err.message, 'Error!');
+               })
     }
 
     render() {

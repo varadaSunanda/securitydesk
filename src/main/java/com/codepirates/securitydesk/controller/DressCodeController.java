@@ -19,7 +19,10 @@ public class DressCodeController {
     private CommonFunctions commonFunctions;
 
     @RequestMapping(value = "/addDresscode", method = RequestMethod.POST)
-    public List<Dresscode> addDresscodeViolations(@RequestBody Dresscode dresscode) {
+    public List<Dresscode> addDresscodeViolations(@RequestBody Dresscode dresscode) throws Exception {
+        if (dresscodeRepository.checkIfEmployeeAlreadyExists (dresscode.getEmployeeId())) {
+            throw new Exception("Baggage already exists for employee");
+        }
         dresscode.setCheckinTime(commonFunctions.currentDateAndTime());
         dresscode.setStatus("Active");
         dresscodeRepository.addDresscodeViolation(dresscode);

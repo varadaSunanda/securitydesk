@@ -46,4 +46,11 @@ public class EmployeeDALImpl implements EmployeeDAL {
     public LateNightConeyanceModel addNewLateNightEntry(LateNightConeyanceModel lateNightConeyanceModel) {
         return mongoTemplate.save(lateNightConeyanceModel);
     }
-}
+
+
+    @Override
+    public boolean checkIfEmployeeAlreadyExists(String employeeId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("employeeId").is(employeeId)).addCriteria(Criteria.where("checkOutTime").is(null));
+        return mongoTemplate.count(query, LateNightConeyanceModel.class) > 0 ? true : false;
+    }}
