@@ -18,8 +18,8 @@ public class AdminRepositoryImpl implements AdminRepository {
 
     @Override
     public MasterEmployee findByEmpId(String empId) {
-        final Query query = constructQueryForFindOne(empId);
-
+        Query query = new Query();
+        query.addCriteria(Criteria.where("EmpId").is(empId));
         return mongoTemplate.findOne(query, MasterEmployee.class);
     }
 

@@ -9,14 +9,14 @@ public class User {
     private String password;
     private String newPassword;
     private String job;
-    private static String employeeName;
+    private String employeeName;
 
-    public static String getEmployeeName() {
+    public  String getEmployeeName() {
         return employeeName;
     }
 
-    public static void setEmployeeName(String employeeName) {
-        User.employeeName = employeeName;
+    public  void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
     public String getNewPassword() {
