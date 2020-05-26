@@ -1,5 +1,12 @@
 db.employee.insertMany([
 {"employeeId" : "9300", "name" : "Abhishek"},
 {"employeeId" : "8177", "name" : "Shekhar"},
-{"employeeId" : "7642", "name" : "Varada"}
+{"employeeId" : "7642", "name" : "Varada"},
+{"employeeId" : "9100", "name" : "Shubham"},
+{"employeeId" : "9191", "name" : "Nayana"},
+{"employeeId" : "9288", "name" : "Nithin"},
+{"employeeId" : "8054", "name" : "Manoj"},
+{"employeeId" : "9369", "name" : "Abilash"},
+{"employeeId" : "7496", "name" : "Aravind"},
+{"employeeId" : "9274", "name" : "Ajith"},
 ])
