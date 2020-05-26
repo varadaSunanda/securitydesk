@@ -1,6 +1,7 @@
 package com.codepirates.securitydesk.repository;
 
 import com.codepirates.securitydesk.model.Baggage;
+import com.codepirates.securitydesk.model.Employee;
 import com.codepirates.securitydesk.model.Token;
 import com.codepirates.securitydesk.util.CommonFunctions;
 import com.mongodb.client.result.UpdateResult;
@@ -62,5 +63,10 @@ public class BaggageRepositoryImpl implements BaggageRepository {
         Query query = new Query();
         query.addCriteria(Criteria.where("employeeId").is(employeeId)).addCriteria(Criteria.where("checkoutTime").is(null));
         return mongoTemplate.count(query, Baggage.class) > 0 ? true : false;
+    }
+
+    @Override
+    public List<Employee> getAllEmployees() {
+        return mongoTemplate.findAll(Employee.class);
     }
 }

@@ -1,0 +1,5 @@
+db.employee.insertMany([
+{"employeeId" : "9300", "name" : "Abhishek"},
+{"employeeId" : "8177", "name" : "Shekhar"},
+{"employeeId" : "7642", "name" : "Varada"}
+])

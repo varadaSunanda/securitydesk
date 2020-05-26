@@ -1,6 +1,7 @@
 package com.codepirates.securitydesk.repository;
 
 import com.codepirates.securitydesk.model.Baggage;
+import com.codepirates.securitydesk.model.Employee;
 import com.codepirates.securitydesk.model.Token;
 import com.mongodb.client.result.UpdateResult;
 
@@ -19,4 +20,6 @@ public interface BaggageRepository {
     List<Token> getAllUsableTokens();
 
     boolean checkIfBaggageAlreadyExistsForEmployee(String employeeId);
+
+    List<Employee> getAllEmployees();
 }
