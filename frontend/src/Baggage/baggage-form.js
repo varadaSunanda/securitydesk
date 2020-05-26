@@ -81,7 +81,7 @@ class BaggageForm extends Component {
                                                 options={options} />
                                     </div>
                                 </div>
-                                <div className="col-md-4">
+                                <div className="col-md-3">
                                     <div className="row">
                                         <div className="col-md-6">
                                             <p className="input-label purple-tag">Employee Name</p>
@@ -91,7 +91,7 @@ class BaggageForm extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-4">
+                                <div className="col-md-3">
                                     <div className="row">
                                         <div className="col-md-6">
                                             <p className="input-label blue-tag">Token</p>

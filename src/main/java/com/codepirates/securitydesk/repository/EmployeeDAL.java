@@ -15,4 +15,6 @@ public interface EmployeeDAL {
     UpdateResult updateLateNightEntry(String employeeId);
 
     LateNightConeyanceModel addNewLateNightEntry(LateNightConeyanceModel lateNightConeyanceModel);
+
+    boolean checkIfEmployeeAlreadyExists(String employeeId);
 }

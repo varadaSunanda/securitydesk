@@ -35,7 +35,9 @@ class LateNightConveyance extends Component {
             .then(res => {
                 this.setState({people: res.data});
                 NotificationManager.success('Successfully added employee', 'Successful!', 2000);
-            })
+            }).catch(err => {
+            NotificationManager.error('Employee data already added', 'Error!');
+        })
     }
 
     deletePerson(e, employeeId){ e.preventDefault(); {
@@ -43,7 +45,9 @@ class LateNightConveyance extends Component {
             .then(res => {
                 this.setState({people: res.data});
                 NotificationManager.success('Successfully deleted employee', 'Successful!', 2000);
-            })
+            }).catch(err => {
+            NotificationManager.error(err.message, 'Error!');
+        })
     }}
 
     render(){

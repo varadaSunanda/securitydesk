@@ -26,7 +26,10 @@ public class SecurityDeskController {
     }
 
     @RequestMapping(value = "/createLNCEntry", method = RequestMethod.POST)
-    public List<LateNightConeyanceModel> addNewLNCEntry(@RequestBody LateNightConeyanceModel lateNightConeyanceModel) {
+    public List<LateNightConeyanceModel> addNewLNCEntry(@RequestBody LateNightConeyanceModel lateNightConeyanceModel) throws Exception {
+        if (employeeDAL.checkIfEmployeeAlreadyExists (lateNightConeyanceModel.getEmployeeId())) {
+            throw new Exception("Baggage already exists for employee");
+        }
         lateNightConeyanceModel.setCheckInTime(commonFunctions.currentDateAndTime());
         employeeDAL.addNewLateNightEntry(lateNightConeyanceModel);
         return getLNCEntry();

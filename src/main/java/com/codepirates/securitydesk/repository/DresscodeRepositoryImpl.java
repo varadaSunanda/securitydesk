@@ -45,4 +45,12 @@ public class DresscodeRepositoryImpl implements DresscodeRepository {
         query.addCriteria(Criteria.where("checkinTime").is(dresscode.getCheckinTime()));
         return mongoTemplate.updateFirst(query, Update.update("status", "Inactive"), Dresscode.class);
     }
+
+
+    @Override
+    public boolean checkIfEmployeeAlreadyExists(String employeeId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("employeeId").is(employeeId)).addCriteria(Criteria.where("status").is("Active"));
+        return mongoTemplate.count(query, Dresscode.class) > 0 ? true : false;
+    }
 }

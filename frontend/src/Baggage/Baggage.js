@@ -34,7 +34,7 @@ class Baggage extends Component {
                 this.setState({baggage: res.data});
                 NotificationManager.success('Successfully added baggage', 'Successful!', 2000);
             }).catch(err => {
-            NotificationManager.error(err.message, 'Error!');
+            NotificationManager.error('Employee data already added', 'Error!');
         })
     }
 
