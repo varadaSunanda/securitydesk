@@ -36,7 +36,7 @@ class Main extends Component {
                                             <a href="#" data-toggle="dropdown" className="profile-dropdown dropdown-toggle">
                                                 {this.props.user} <b class="caret"></b></a>
                                             <ul className="dropdown-menu">
-                                                <li><a href="#">Log out</a></li>
+                                                <li><a onClick={this.props.setLogout}>Log out</a></li>
                                             </ul>
                                         </li>
                                     </ul>
