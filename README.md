@@ -1,6 +1,6 @@
 # securitydesk
 
-<p>To run locally:</p>
+<p>To run locally follow these:</p>
  <ul>
  <li>Run MongoDB server</li>
  <li>Clone this repository</li>
